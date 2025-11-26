@@ -117,13 +117,25 @@ Cette partie est dédiée aux personnes qui ont vocation à contribuer au code m
    doc_contrib/git
    doc_contrib/release
 
+Guides de migrations
+-------------------------------------------------
+
+Cette partie est dédiée aux personnes qui recherchent un guide pour migrer leur version mviewer.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Guides de migration
+
+   doc_migration/v4.0.rst
+
 Auteurs et licence
 ==================
 
 Cette documentation a été réalisée par :
 
-* l'équipe "mviewer" *(Région Bretagne)*
-* `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
+* Maintenue par la communauté "mviewer" *(PSC et contributeurs)*
+* Initialisée `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
 
 Sauf indication contraire, cette documentation est sous licence **Creative Commons Attribution - Non Commercial - ShareAlike 4.0** (CC-BY-NC-SA_) .
 

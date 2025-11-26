@@ -159,20 +159,99 @@ Pour vos modifications et l'organisation de vos fichiers, nous recommandons de s
 
 .. _ask:
 
-Proposer une modification
--------------------------
+Processus type d'une modification
+----------------------------------
 
-Pour proposer une correction d'anomalie ou une évolution, vous devez suivre ces étapes :
+Avant de modifier le code, identifiez le ou les dépôts à toucher :
 
-- Créer une issue sur Github en suivant la page :ref:`issue`.
-- Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`.
-- Créer une branche portant le numéro de l'issue (ex: issue-2287).
-- Apporter vos modifications sur cette branche.
-- Partager cette branche via l'issue pour que les autres puissent tester et obtenir des conseils ou des avis.
-- Réaliser une pull request via GitHub en suivant la page :ref:`pr`.
+- **Correctif ou amélioration du cœur seulement** : dépôt ``mviewer`` uniquement ; clone minimal (sans sous-dépôts) suffisant.
+- **Nouvelle fonctionnalité avec démonstration** : dépôt ``mviewer`` + sous-dépôt ``demo`` (``git submodule update --init demo``) pour ajouter ou mettre à jour la démo associée.
+- **Nouvel addon** : dépôt ``mviewer-addons`` (``git submodule update --init addons``) et, si besoin, ``demo`` pour publier un exemple d'usage.
 
-La pull request permettra d'importer votre modification dans le code natif. Vous diposerez alors de votre modification de manière native sans vous en préoccuper ultérieurement.
+Pour proposer une correction d'anomalie ou une évolution, suivez ensuite ces étapes :
 
+#. Créer une issue sur Github en suivant la page :ref:`issue`.
+#. Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`.
+#. Créer une branche portant le numéro de l'issue (ex: ``issue-2287``).
+#. Apporter vos modifications sur cette branche en incluant :
+   - le code du cœur dans ``mviewer`` ;
+   - la démonstration dans le dépôt ``mviewer-demo`` si nécessaire (branche nommée de la même manière) ;
+   - la documentation dans ``docs/`` pour décrire la modification et son paramétrage ;
+   - le nouvel addon dans le dépôt ``mviewer-addons`` avec un ``README.md`` dédié le cas échéant.
+#. Partager vos problématiques rencontrés ou vos propositions dans l'issue directement pour que les autres puissent tester et donner des avis. Vous pouvez auss epxpliquer la solution proposée dans le pull request.
+#. Réaliser une ou plusieurs pull requests via GitHub en suivant la page :ref:`pr` :
+   - une PR par dépôt (``mviewer``, ``mviewer-demo``, ``mviewer-addons``) si plusieurs dépôts sont concernés ;
+   - indiquez dans chaque PR les liens vers les autres PR associées pour faciliter la revue.
+
+La pull request permettra d'importer votre modification dans le code natif et dans les sous-dépôts concernés. Vous disposerez alors de votre modification de manière native sans vous en préoccuper ultérieurement.
+
+Contribuer avec les sous-dépôts (mviewer ≥ 4)
+--------------------------------------------
+
+Depuis mviewer 4, les répertoires ``demo`` et ``addons`` sont des sous-dépôts Git indépendants (`mviewer-demo <https://github.com/mviewer/mviewer-demo>`_ et `mviewer-addons <https://github.com/mviewer/mviewer-addons>`_).
+Ils sont facultatifs : vous pouvez utiliser mviewer sans les initialiser ou les initialiser au cas par cas pour alléger vos déploiements.
+Quand vous préparez une contribution, choisissez les dépôts concernés en fonction des éléments modifiés.
+
+Commandes utiles pour cloner et récupérer les sous-dépôts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- **Clone minimal (sans sous-dépôts)** :
+
+  .. code-block:: bash
+
+     git clone https://github.com/mviewer/mviewer.git --branch develop
+
+- **Clone complet (cœur + ``demo`` + ``addons``)** :
+
+  .. code-block:: bash
+
+     git clone https://github.com/mviewer/mviewer.git --branch develop --recurse-submodules
+
+- **Initialiser les sous-dépôts après un clone existant** :
+
+  .. code-block:: bash
+
+     git submodule update --init --recursive
+
+- **N'initialiser qu'un seul sous-dépôt** (exemple : uniquement ``demo`` pour préparer une démonstration) :
+
+  .. code-block:: bash
+
+     git submodule update --init demo
+
+- **Mettre à jour les sous-dépôts existants** (après un ``git pull``) :
+
+  .. code-block:: bash
+
+     git submodule update --recursive
+
+Exemple de contributions
+^^^^^^^^^^^^^^^^^^^^^^^
+
+- **Corriger un bug dans le cœur mviewer uniquement**
+
+  - Travaillez dans le dépôt principal ``mviewer`` (pas de modification des sous-dépôts).
+  - Un clone minimal suffit (``git clone ... --branch develop``) ; vous n'avez pas besoin d'initialiser les sous-dépôts.
+  - Ouvrez une issue décrivant le correctif, développez la correction sur une branche dédiée, puis proposez une pull request.
+  - Si une note de version ou une documentation est nécessaire, mettez-la à jour dans ce même dépôt.
+
+- **Ajouter une nouvelle fonctionnalité du cœur mviewer avec démonstration**
+
+  - Travaillez dans ``mviewer`` pour implémenter la fonctionnalité (exemple : un nouveau paramètre de configuration).
+  - Initialisez le sous-dépôt ``demo`` pour préparer ou mettre à jour une démonstration : ``git submodule update --init demo``.
+  - Créez ou mettez à jour une démo dans ``mviewer-demo`` pour montrer le fonctionnement.
+  - Mettez la documentation à jour dans le dépôt ``mviewer`` (par exemple dans ``docs/``) pour décrire la nouveauté et le paramétrage associé.
+  - Ouvrez deux pull requests synchronisées : une pour ``mviewer`` et une pour ``mviewer-demo`` afin que la démo soit disponible dès l'intégration.
+
+- **Proposer un nouvel addon**
+
+  - Développez l'addon dans ``mviewer-addons`` dans un dossier dédié (exemple : ``mviewer-addons/myaddon``) et ajoutez-y un ``README.md`` décrivant son usage, ses paramètres et les prérequis éventuels.
+  - Initialisez le sous-dépôt ``addons`` (``git submodule update --init addons``) et le sous-dépôt ``demo`` si vous publiez une démonstration (``git submodule update --init demo``).
+  - Ajoutez une démonstration de l'addon dans ``mviewer-demo`` pour faciliter les tests et l'illustration de l'intégration.
+  - Soumettez une pull request dans ``mviewer-addons`` pour l'addon, et une autre dans ``mviewer-demo`` pour la démo correspondante.
+  - Si nécessaire, complétez la documentation dans ``mviewer`` pour référencer l'addon ou son intégration.
+
+Ces recommandations vous permettront de structurer vos apports entre le cœur et les sous-dépôts et d'éviter d'introduire des régressions sur l'ensemble de l'écosystème mviewer.
 
 Documentation
 -------------

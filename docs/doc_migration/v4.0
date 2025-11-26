@@ -1,0 +1,141 @@
+.. Authors :
+.. mviewer team
+
+.. _custom:
+
+Migration de mviewer 3.x vers mviewer 4
+=======================================
+
+Principales évolutions techniques
+---------------------------------
+
+- **Bootstrap 5.3.3** remplace Bootstrap 3. Les feuilles de style et le code HTML de l'application s'appuient désormais sur les composants et attributs de Bootstrap 5 (par exemple ``data-bs-`` pour les comportements interactifs et les nouveaux composants comme ``spinner-border``).
+- **Variables CSS globales** : la feuille ``css/mviewer.css`` expose des propriétés ``--mv-*`` et surcharge certaines variables ``--bs-*`` afin d'appliquer le thème (couleurs, police, rayons de bordure, etc.). Les fichiers de thème dans ``css/themes`` ne définissent plus des règles complexes ; ils se limitent à fournir des valeurs pour les variables personnalisables.
+- **Organisation des ressources** : les répertoires ``/addons`` et ``/demo`` sont des sous-modules Git. Ils sont mis à jour avec ``git submodule update --init --remote`` et suivent leurs propres branches ``main``.
+
+Pourquoi passer à Bootstrap 5 ?
+-------------------------------
+
+- **Composants et attributs plus modernes** : la v4/develop adopte Bootstrap 5, ce qui apporte les nouveaux composants (ex. spinner-border) et la convention d’attributs data-bs-*, assurant une interface (U) moderne et un meilleur support.
+
+- **Suppression des dépendances jQuery** : Bootstrap 5 fournit ses propres modules JS (ex. bootstrap.Popover, bootstrap.Tooltip), permettant de retirer les initialisations jQuery héritées de v3 et de réduire la dette technique.
+
+- **Grille et utilitaires modernisés** : la grille row/col et les utilitaires d’espacement m-*/p-* remplacent les variantes Bootstrap 3 (row-fluid, col-xs-*), facilitant un code plus uniforme entre templates, addons et contrôles personnalisés.
+
+Pourquoi utiliser des variables CSS ?
+-------------------------------------
+
+- **Thématisation centralisée** : css/mviewer.css expose des variables --mv-* et surcharges --bs-*, ce qui permet d’appliquer un thème (couleurs, police, rayons de bordure) sans dupliquer des règles complexes dans chaque feuille de style.
+
+- **Réduction des valeurs en dur** : les templates, addons et contrôles peuvent référencer var(--mv-color-primary) ou les variables --bs-* au lieu de coder des couleurs ou dimensions, ce qui rend le passage d’un thème à l’autre immédiat.
+
+- **Interopérabilité avec les thèmes** : les fichiers de thème dans css/themes ne fournissent plus que des valeurs pour ces variables, garantissant que tout composant (Mustache, addon, customlayer/customcontrol) hérite automatiquement de la palette ou de la typographie du thème actif.
+
+
+Pourquoi des sous-dépôts ?
+---------------------------
+
+* **Éco-conception et modularité** : démos et addons sont optionnels. Il est
+  désormais possible d'utiliser mviewer sans récupérer ces ressources ou en ne
+  récupérant que les composants utiles dans ``apps``.
+
+* **Réduction du poids des clones** : en l'absence de sous-dépôts, le clone de
+  mviewer est plus léger et plus rapide.
+
+* **Mises à jour indépendantes** : ``mviewer-demo`` et ``mviewer-addons``
+  évoluent chacun à leur rythme ; les séparer évite de re-télécharger des
+  données inutiles lors des mises à jour du cœur mviewer.
+
+Étapes de migration
+-------------------
+
+#. Vérifier que l'arborescence locale est propre (``git status``) et sauvegarder
+   les éventuelles modifications locales dans ``demo`` et ``addons``.
+#. Mettre à jour la référence de travail :
+
+   .. code-block:: bash
+
+      git checkout develop
+      git pull
+
+#. Renommer les répertoires ``demo`` et ``addons`` issus de ``master`` afin
+   d'éviter les conflits avec les sous-dépôts (ne pas les supprimer pour
+   conserver d'éventuelles personnalisations locales) :
+
+   .. code-block:: bash
+
+      mv demo demo.bak
+      mv addons addons.bak
+
+#. Initialiser et mettre à jour les sous-dépôts :
+
+   .. code-block:: bash
+
+      git submodule update --init --recursive
+
+#. Lors des prochains clonages, récupérer directement les sous-dépôts avec
+   l'option ``--recurse-submodules`` :
+
+   .. code-block:: bash
+
+      git clone https://github.com/mviewer/mviewer.git --branch develop --recurse-submodules
+
+#. Si des personnalisations avaient été faites dans ``demo`` ou ``addons`` sur
+   ``master``, prévoir des conflits : les contenus sauvegardés dans
+   ``demo.bak`` et ``addons.bak`` ne seront pas fusionnés automatiquement avec
+   les sous-dépôts. Le report devra être fait manuellement dans
+   ``mviewer-demo``, ``mviewer-addons`` (ou dans vos forks), en comparant vos
+   changements avec les versions officielles.
+
+Utiliser (ou non) les sous-dépôts
+---------------------------------
+
+* **Sans démos ni addons** : ne rien initialiser. Le cœur mviewer fonctionne
+  seul, utile pour un déploiement minimal.
+* **Uniquement les addons** :
+
+  .. code-block:: bash
+
+     git submodule update --init addons
+
+* **Uniquement la démo** :
+
+  .. code-block:: bash
+
+     git submodule update --init demo
+
+* **Tout récupérer** (démos + addons) :
+
+  .. code-block:: bash
+
+     git submodule update --init --recursive
+
+* **Lors d'un clonage initial** :
+
+  .. code-block:: bash
+
+     git clone https://github.com/mviewer/mviewer.git --branch develop --recurse-submodules
+
+Catalogue et liens
+------------------
+
+* La démo fournie dans ``demo`` contient le catalogue mviewer disponible à
+  l'URL suivante : ``http://kartenn.region-bretagne.fr/kartoviz/?config=demo/index.html``.
+* Les liens pointant auparavant vers ``/demo/addons`` doivent maintenant viser
+  ``/addons``. Si vous exposez des ressources web ou documentations internes,
+  mettez à jour ces URLs après migration.
+* Les personnalisations personnelles restent à placer de préférence dans
+  ``apps`` ou des dépôts dédiés pour éviter les conflits lors des futures
+  mises à jour des sous-dépôts.
+
+Points d'attention
+------------------
+
+* Les mises à jour de ``mviewer`` peuvent modifier l'état des sous-dépôts ;
+  exécuter régulièrement ``git submodule update`` après un ``git pull``.
+* Les pipelines CI/CD et scripts de déploiement doivent être adaptés pour
+  initialiser les sous-dépôts avant de construire ou publier les démos et addons.
+* Pour éviter les conflits lors des prochaines mises à jour, conserver vos
+  personnalisations dans ``apps`` ou dans des dépôts séparés plutôt que
+  directement dans ``demo`` ou ``addons``.
+  
