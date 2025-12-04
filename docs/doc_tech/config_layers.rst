@@ -27,7 +27,7 @@ Configurer - Les couches
                 queryable=""
                 fields=""
                 aliases=""
-                fieldsjson=""
+                jsonfields=""
                 type=""
                 filter=""
                 filterstyle=""
@@ -136,7 +136,7 @@ Paramètres pour gérer l'interrogation et la mise en forme de la fiche d'interr
 * ``featurecount`` :guilabel:`studio` : Nombre d'éléments maximun retournés lors de l'interrogation.
 * ``fields`` :guilabel:`studio` :  Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette.
 * ``aliases`` :guilabel:`studio` : Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
-* ``fieldsjson`` : Liste des champs de type json. Avec ce paramètre, mviewer parse le contenu des champs spécifiés en JSON, ce qui permet ensuite d'exploiter ces valeurs dans des boucles de templates mustache  pour afficher une liste, un tableau...
+* ``jsonfields`` : Liste des champs de type json. Avec ce paramètre, mviewer parse le contenu des champs spécifiés en JSON, ce qui permet ensuite d'exploiter ces valeurs dans des boucles de templates mustache  pour afficher une liste, un tableau...
 
 Paramètres pour gérer la recherche
 ======================================
