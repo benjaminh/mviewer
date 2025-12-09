@@ -3,7 +3,7 @@
 
 .. _migrationv4:
 
-Mviewer 3.x vers 4.0
+Mviewer 3.15 vers 4.0
 =======================================
 
 Introduction à la migration
@@ -117,7 +117,7 @@ Toute modification dans le cœur pourrait en effet générer des conflits à la 
 
     git submodule update --init --recursive
 
-5 - Si vous commencez par cette version 4 ou bien souhaitez repartir de zéro, vous pouvez récupérer directement les sous-dépôts avec l'option ``--recurse-submodules`` ::
+5 - Si vous commencez par cette version 4 ou bien souhaitez repartir de zéro, vous pouvez récupérer directement les sous-dépôts avec l'option ``--recurse-submodules`` (adaptez le nom de la branche master ou develop selon besoin) ::
 
     git clone https://github.com/mviewer/mviewer.git --branch develop --recurse-submodules
 
