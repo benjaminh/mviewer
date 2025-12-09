@@ -117,10 +117,10 @@ Cette partie est dédiée aux personnes qui ont vocation à contribuer au code m
    doc_contrib/git
    doc_contrib/release
 
-Guides de migrations
+Guides de migration
 -------------------------------------------------
 
-Cette partie est dédiée aux personnes qui recherchent un guide pour migrer leur version mviewer.
+Cette section propose les informations nécessaires pour migrer votre installation mviewer vers une version plus récente. Vous y trouverez les étapes indispensables, les points d’attention et les évolutions techniques à prendre en compte lors de la mise à jour.
 
 .. toctree::
    :hidden:
@@ -135,7 +135,7 @@ Auteurs et licence
 Cette documentation a été réalisée par :
 
 * Maintenue par la communauté "mviewer" *(PSC et contributeurs)*
-* Initialisée `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
+* Initialisée par `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
 
 Sauf indication contraire, cette documentation est sous licence **Creative Commons Attribution - Non Commercial - ShareAlike 4.0** (CC-BY-NC-SA_) .
 
