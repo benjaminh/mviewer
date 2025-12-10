@@ -117,13 +117,25 @@ Cette partie est dédiée aux personnes qui ont vocation à contribuer au code m
    doc_contrib/git
    doc_contrib/release
 
+Guides de migration
+-------------------------------------------------
+
+Cette section propose les informations nécessaires pour migrer votre installation mviewer vers une version plus récente. Vous y trouverez les étapes indispensables, les points d’attention et les évolutions techniques à prendre en compte lors de la mise à jour.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Guides de migration
+
+   doc_migration/v4.0.rst
+
 Auteurs et licence
 ==================
 
 Cette documentation a été réalisée par :
 
-* l'équipe "mviewer" *(Région Bretagne)*
-* `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
+* Maintenue par la communauté "mviewer" *(PSC et contributeurs)*
+* Initialisée par `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
 
 Sauf indication contraire, cette documentation est sous licence **Creative Commons Attribution - Non Commercial - ShareAlike 4.0** (CC-BY-NC-SA_) .
 

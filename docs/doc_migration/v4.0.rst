@@ -1,0 +1,361 @@
+.. Authors :
+.. mviewer team
+
+.. _migrationv4:
+
+Mviewer 3.15 vers 4.0
+=======================================
+
+Introduction à la migration
+----------------------------
+
+La migration vers la nouvelle version de mviewer apporte des évolutions importantes, à la fois sur l’interface et sur l’organisation du code. Ces changements ont été conçus pour moderniser l’application, la rendre plus légère et plus modulable, et améliorer l’expérience utilisateur.
+
+Des changements d’interfaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La nouvelle version de mviewer modernise l’application pour garantir :
+
+- **Une meilleure compatibilité avec les standards web** : votre application fonctionne correctement sur tous les navigateurs, toutes les tailles d’écran et tous les appareils.
+- **Une interface plus cohérente et simplifiée** : les composants, menus et panneaux sont harmonisés pour faciliter la navigation.
+- **Une expérience utilisateur améliorée** : l’application est plus fluide et plus intuitive.
+
+En adoptant cette version, vous bénéficiez donc d’une interface moderne, plus légère et mieux adaptée aux besoins actuels des utilisateurs.
+
+Utilisation des sous-dépôts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La migration introduit également l’utilisation de sous-dépôts pour organiser les ressources optionnelles :
+
+- **Éco-conception et modularité** : les démos et addons sont désormais optionnels. Vous pouvez utiliser mviewer sans les récupérer, ou ne récupérer que les composants dont vous avez réellement besoin.
+- **Réduction du poids des clones** : le téléchargement initial de mviewer est plus léger et plus rapide.
+- **Mises à jour indépendantes** : les sous-dépôts *mviewer-demo* et *mviewer-addons* évoluent à leur rythme. Les séparer évite de re-télécharger des fichiers inutiles lors des mises à jour du cœur mviewer.
+
+Cette organisation rend l’application plus modulable et permet de gagner en efficacité tout en conservant la flexibilité nécessaire pour vos projets.
+
+Changements majeurs
+-------------------
+
+**Migration Bootstrap 3 → Bootstrap 5.3**
+
+La mise à jour de Bootstrap entraîne une évolution importante des classes HTML et des composants.
+
+➡️ Tous vos composants personnalisés doivent être vérifiés afin d’assurer un affichage correct et, si nécessaire, être adaptés. Vous trouverez à la section *Étapes de migration*, une liste des éléments à vérifier.
+
+Pour les mises à jour de vos composants, référez-vous à la documentation officielle Bootstrap 5.  
+📄 https://getbootstrap.com/docs/5.3/getting-started/introduction/
+
+**Fin des Glyphicons → Passage aux Remix Icons**
+
+Les Glyphicons ne sont plus fournis.
+
+➡️ Utilisez Remix Icons (recommandé) ou Font Awesome pour vos plugins, templates et composants personnalisés.
+
+**Introduction des variables CSS pour la gestion du thème**
+
+mviewer adopte désormais un système basé sur des variables CSS.
+
+➡️ Vous pouvez les utiliser dans vos développements personnalisés (accueil, templates, customs…) pour simplifier la personnalisation et harmoniser le thème.
+
+**Refonte complète du mode mobile**
+
+Le mode mobile bénéficie d’un nouveau système de navigation et d’une optimisation de l’ergonomie.
+
+➡️ Nous vous recommandons de vérifier le rendu de votre application sur plusieurs tailles d’écran.
+
+**Optimisation des modes Défaut / Simplifié / Ultra-simplifié**
+
+Les comportements d’affichage selon les largeurs d’écran ont été améliorés.
+
+➡️ Nous vous recommandons de vérifier le rendu de votre application selon les différents modes via le menu *Partager la carte*.
+
+**Suppression de la font Roboto**
+
+Mviewer utilise désormais la police système par défaut.
+
+➡️ Pour intégrer une police personnalisée, consultez la rubrique *Configurer - Apparence*.
+
+**Organisation des ressources**
+
+Les répertoires ``/demo`` et ``/demo/addons`` sont maintenant des sous-modules Git. Vous pourrez les mettre à jour, cibler des versions spécifiques ou bien utiliser vos propres branches comme un projet Git classique.
+
+Étapes de migration
+-------------------
+
+Ces étapes ont pour objectif de vous guider dans la compréhension et la mise en œuvre de la migration. Vous comprendrez donc techniquement comment passer à mviewer 4 selon votre environnement.
+
+Cette section a été écrite pour une migration de mviewer 3.x vers 4.0 car elle comporte des modifications impactantes (breaking changes).
+
+.. note::
+    Il est conseillé d'avoir deux instances en parallèle : une instance de prod et un mviewer 4.x pour effectuer tous les tests nécessaires.
+
+A - Mise à jour de votre instance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ce guide explique le passage de la branche ``master 3.x`` à la branche ``master 4.0``. Cette documentation concerne donc la branche ``master``.
+
+Si votre environnement est aligné sur la branche ``develop``, la procédure est la même.
+
+Ce guide part du principe que les bonnes pratiques décrites dans la documentation mviewer sont respectées.
+
+Toute modification dans le cœur pourrait en effet générer des conflits à la migration qui ne sauraient être décrits dans aucune documentation.
+
+1 - Nous allons vérifier que l'arborescence locale est propre ::
+
+    cd mviewer
+    git status
+
+2 - Si vous avez fait des modifications dans ``/demo`` (au niveau des démos ou des addons), alors il faudra renommer le répertoire ``/demo`` (celui de master v3.x) afin d'éviter des conflits avec le sous-dépôt portant le même nom (il ne faut pas le supprimer pour conserver d'éventuelles personnalisations locales) ::
+
+    mv demo demo.bak
+
+3 - Cette commande va mettre à jour la branche de travail et récupérer le répertoire ``/demo`` issu du sous-module ``mviewer-demo`` (même s'il n'existe pas) ::
+
+    git pull
+
+4 - Initialiser et mettre à jour les sous-dépôts ::
+
+    git submodule update --init --recursive
+
+5 - Si vous commencez par cette version 4 ou bien souhaitez repartir de zéro, vous pouvez récupérer directement les sous-dépôts avec l'option ``--recurse-submodules`` (adaptez le nom de la branche master ou develop selon besoin) ::
+
+    git clone https://github.com/mviewer/mviewer.git --branch develop --recurse-submodules
+
+6 - Si vous aviez fait des modifications dans ``/demo`` et que vous avez renommé le répertoire (``demo.bak``), alors le report de vos modifications devra être fait manuellement.
+
+- Les modifications dans ``/demo.bak/addons`` seront à reporter dans ``mviewer-addons`` (ou dans votre fork).
+- Les autres modifications dans ``/demo.bak`` seront à reporter dans ``mviewer-demo`` (ou dans votre fork) en comparant vos changements avec les versions officielles.
+
+Si besoin, aidez-vous du processus de contribution qui est décrit dans la documentation. N'hésitez-pas à demander de l'aide à la communauté.
+
+B - Éléments à vérifier lors de la mise à jour
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si votre application contient des **éléments personnalisés (style CSS, page d'accueil ou template ...)**, veuillez vérifier les points suivants.
+
+🗺️ **APPLICATION**
+
+
+**Avez-vous une page d’accueil ?**
+
+
+❌ Non : je passe à l’étape d’après  
+
+✔️ Oui :
+
+- Je vérifie le bon fonctionnement de l’accueil dans la nouvelle version
+- Si nécessaire, j’adapte le code selon la documentation officielle de Bootstrap 5
+
+**Utilisez-vous un thème (hors DSFR) ?**
+
+❌ Non : je passe à l’étape d’après  
+
+✔️ Oui :
+
+- J’utilise un thème par défaut disponible dans ``/css`` (ex : ``css/alizarin.css``) : je n’ai aucune action à réaliser, les thèmes ont été mis à jour et sont compatibles avec la nouvelle version
+- J’utilise un thème personnalisé : mon thème n’est malheureusement plus compatible avec cette nouvelle version. Je peux mettre à jour mon thème personnalisé en suivant la procédure présentée à la rubrique *Gestion d'un thème personnalisé*.
+
+**Utilisez-vous le thème DSFR (Design système de l'État) ?**
+
+❌ Non : je passe à l’étape d’après  
+
+✔️ Oui : Cette version n’est pas encore compatible avec ce thème. Nous vous invitons donc à patienter ou à utiliser un thème par défaut.
+
+**Utilisez-vous un plugin ?**
+
+❌ Non : je passe à l’étape d’après  
+
+✔️ Oui :
+
+- J’utilise un plugin disponible dans le dépôt officiel mviewer :
+  - Tous les plugins officiels ont été mis à jour pour cette nouvelle version.
+  - Pour garantir leur bon fonctionnement, il est nécessaire de reporter la configuration de votre ancien plugin vers sa nouvelle version (attention notamment à la localisation des fichiers ``/lib``).
+- J’utilise un plugin développé par mes soins :
+  - Je vérifie le bon fonctionnement du plugin dans la nouvelle version
+  - Si nécessaire, j’adapte le code selon la documentation officielle de Bootstrap 5 et en utilisant les démos
+
+.. warning::
+    Les répertoires ``addons`` ont été déplacés vers des dépôts indépendants, ce qui entraîne un changement d’URL. Pour plus d’informations, veuillez vous reporter à la rubrique ci-dessous qui fait référence aux sous-dépôts.
+
+🌐 **LAYER (pour chaque couche de l'application)**
+
+**Avez-vous un custom layer ?**
+
+❌ Non : je passe à l’étape d’après  
+
+✔️ Oui :
+
+- Le custom layer gère seulement le style de la couche
+  - Aucun changement n’est requis, vérifiez simplement le rendu.
+- Le custom layer intègre des composants supplémentaires (alerte, panel…) ?
+  - Je vérifie le bon fonctionnement dans la nouvelle version
+  - Si nécessaire, j’adapte le code selon la documentation officielle de Bootstrap 5 et en utilisant les démos
+
+**Avez-vous un custom control ?**
+
+❌ Non : je passe à l’étape d’après
+
+✔️ Oui :
+
+- Je vérifie le bon fonctionnement dans la nouvelle version
+- Si nécessaire, j’adapte le code selon la documentation officielle de Bootstrap 5 et en utilisant les démos
+
+**Avez-vous un template mustache ?**
+
+❌ Non : je passe à l’étape d’après
+
+✔️ Oui :
+
+- Je vérifie le bon fonctionnement dans la nouvelle version
+- Si nécessaire, j’adapte le code selon la documentation officielle de Bootstrap 5 et en utilisant les démos
+
+.. warning::
+    La font Roboto n’est plus disponible. Veuillez supprimer les propriétés ``.css`` associées dans votre template ou intégrer la font dans votre application.
+
+Gestion d'un thème personnalisé
+-------------------------------
+.. warning::
+    Les thèmes créés pour mviewer ≤3.15 ne sont **pas compatibles** avec mviewer 4. Il est donc nécessaire de mettre à jour votre thème en suivant la procédure ci-dessous.
+
+Bonne nouvelle : la nouvelle approche basée sur des variables CSS globales est plus simple, plus flexible et plus rapide à maintenir. En quelques minutes, vous pouvez désormais personnaliser l’apparence de votre application sans toucher au code des composants.
+
+Création ou mise à jour d'un thème
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pour adapter votre thème personnalisé, remplacez les propriétés de style de votre fichier ``apps/monapp/montheme.css`` par un bloc de variables globales, par exemple ::
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    :root {
+      --mvcustom-color-primary: #5299a8;
+      --mvcustom-font: 'Poppins', sans-serif;
+      --mvcustom-rightpanel-size: 40%;
+    }
+
+**Remarque**
+
+- Un exemple complet est disponible ici : https://github.com/mviewer/mviewer-demo/blob/main/customtheme/customstyle.css et dans ``demo/customtheme.xml``  
+- Seules les variables souhaitées doivent être ajoutées ; les autres conservent les valeurs par défaut.  
+- Ajoutez vos styles spécifiques après les variables globales si nécessaire.
+
+Les variables globales
+~~~~~~~~~~~~~~~~~~~~~~
+
+Le bloc ``:root`` contient toutes les variables CSS permettant de **personnaliser l’apparence de votre application mviewer**.  
+Ces variables rendent le thème facilement modifiable et cohérent, sans avoir à intervenir dans chaque composant.
+
+**Couleurs**
+
+- ``--mvcustom-color-primary`` : couleur principale de l’application (HEX)
+- ``--mvcustom-color-secondary`` : couleur secondaire pour un thème bicolore (HEX)
+
+**Police**
+
+- ``--mvcustom-font`` : police principale à utiliser dans l’application
+
+💡 Astuce : n’oubliez pas d’importer la police via ``@import`` ou ``@font-face``.
+
+**Bordures**
+
+- ``--mvcustom-border-radius`` : définit l’arrondi des composants d’interface (``0`` → bords carrés, ``5px`` ou plus → coins arrondis)
+
+**Taille des fenêtres d'interrogation**
+
+- ``--mvcustom-rightpanel-size`` : largeur du panel latéral droit (en ``%`` ou ``px``)  
+- ``--mvcustom-bottompanel-size`` : hauteur du panel inférieur (en ``%`` ou ``px``)
+
+**Navbar (barre de navigation)**
+
+- ``--mvcustom-navbar-h`` : hauteur de la navbar (px)  
+- ``--mvcustom-navbar-color`` : couleur du texte et des icônes (HEX)  
+- ``--mvcustom-navbar-colorbody`` : couleur de fond de la navbar (HEX)
+
+**Remarques**
+
+• Les variables sont compatibles avec les plugins et les composants Bootstrap 5 (ex : bouton).  
+• Les variables peuvent être réutilisées partout dans vos fichiers mviewer (accueil, template, etc.) via ``var(--nom-de-la-variable)``.  
+• Modifier ces valeurs permet de changer rapidement et de manière cohérente l’apparence de toute l’application. 
+
+
+Gestion des sous-dépôts
+-----------------------
+
+Utiliser (ou non) les sous-dépôts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cette courte section sous la forme d'une FAQ vous permettra de comprendre comment utiliser les sous-modules et dans quel(s) cas il n'est pas utile de les utiliser.
+
+**Je veux un clone qui récupère tout le contenu en une seule commande GIT**
+
+Pour réaliser un clonage initial sur la branche develop ou master (≥ v4) avec les sous-modules ::
+
+    cd <repertoire_parent_mviewer>
+    git clone https://github.com/mviewer/mviewer.git --branch develop --recurse-submodules
+
+**Je ne veux que le coeur mviewer (≥ v4) sans démos ni addons**
+
+Dans ce cas, vous n'avez rien à faire de plus que le clone. Le cœur mviewer fonctionne seul, ce qui est utile pour un déploiement minimal et léger ::
+
+    cd mviewer
+    git clone https://github.com/mviewer/mviewer.git
+
+**Je ne veux récupérer que les addons sans récupérer les démos**
+
+Auparavant, les addons étaient dans ``/demo/addons``. Avec un mviewer ≥ v4, ils sont à la racine dans ``/addons``.
+
+Si vous n'avez pas récupéré le contenu des addons ou bien avez fait un pull du mviewer v3 à v4 sur votre branche de travail, alors le contenu du nouveau répertoire ``/addons`` est vide.  
+Cette commande vous permettra de récupérer les addons dans ``/addons`` ::
+
+    cd mviewer
+    git submodule update --init addons
+
+**Je souhaite tester les démos sans les addons**
+
+Ce n'est pas possible, puisque certaines démos utilisent des addons. Il vous faudra donc un clonage complet pour avoir ``/addons`` et ``/demo`` à la racine du mviewer.
+
+**J'ai réalisé un clone mviewer (≥ v4), mais le contenu de /addons et /demo est vide**
+
+Vous avez potentiellement réalisé une commande de clone sans les paramètres de récupération des sous-modules (``recurse``).  
+Vous pouvez récupérer ou mettre à jour les sous-modules ainsi ::
+
+    cd mviewer
+    git submodule update --init --recursive
+
+**Je souhaite mettre à jour mon mviewer et les sous-modules**
+
+Vous devez réaliser un pull et une mise à jour des sous-modules.  
+Les modifications réalisées dans ``/apps`` seront ignorées afin d'éviter des conflits lors de la récupération des nouveautés ::
+
+    cd mviewer
+    git pull
+    git submodule update
+
+**Je souhaite récupérer les nouvelles démos ou les addons sans mettre à jour le coeur du mviewer**
+
+Grâce au fonctionnement en sous-module, c'est possible. Voici les commandes ::
+
+    cd mviewer
+    git submodule update
+
+
+Catalogue et liens
+~~~~~~~~~~~~~~~~~~~
+
+• Le répertoire ``/demo`` contient toutes les fichiers des démos consultables à l'URL suivante :  
+  https://kartenn.region-bretagne.fr/kartoviz/demo/
+
+• Si vous souhaitez déployer et personnaliser le catalogue mviewer, vous trouverez ici les sources et la documentation :  
+  https://github.com/mviewer/mviewer-demo/tree/main/catalogue
+
+• Les liens pointant auparavant vers ``/demo/addons`` doivent maintenant viser ``/addons``.  
+  Si vous exposez des ressources web ou documentations internes, mettez à jour ces URLs après migration.
+
+• Les personnalisations personnelles restent toujours à placer de préférence dans ``apps`` ou des dépôts dédiés pour éviter les conflits lors des futures mises à jour des sous-dépôts.
+
+
+Points d'attention
+~~~~~~~~~~~~~~~~~~~
+
+• Les mises à jour de mviewer peuvent modifier l'état des sous-dépôts ; exécuter régulièrement ``git submodule update`` après un ``git pull``.  
+• Les pipelines CI/CD et scripts de déploiement doivent être adaptés pour initialiser les sous-dépôts avant de construire ou publier les démos et addons.  
+• Pour éviter les conflits lors des prochaines mises à jour, conserver vos personnalisations dans ``apps`` ou dans des dépôts séparés plutôt que directement dans ``demo`` ou ``addons``.
