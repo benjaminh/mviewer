@@ -78,7 +78,7 @@ Vous pourrez créer des nouvelles branches et modifier le code sans impacter le 
 
 - Réalisez un clone (copie) du code mviewer sur votre ordinateur en collant l'URL précédente::
 
-        git clone https://github.com/MON_ORG/mviewer.git
+        git clone https://github.com/MON_ORG/mviewer.git --recurse-submodules
 
 
 .. image:: ../_images/contrib/cloneurl.PNG
@@ -213,7 +213,7 @@ Vous devrez un jour mettre à jour votre branche master au sein de votre fork. F
 Organisation des fichiers de carte
 ----------------------------------
 
-**Rgèle générale**
+**Règle générale**
 
 Ne **JAMAIS** modifier les fichiers du coeur.
 

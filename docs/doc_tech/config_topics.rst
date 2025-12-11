@@ -16,7 +16,7 @@ Ici, les `couches <configlayers>` sont organisées de la manière suivante :
 
 * une **couche** (layer) est intégrée à un groupe ou à un thème,
 * un **groupe** est intégré à un thème et peut contenir entre 1 et *n* couches,
-* un **thème** est intégré au parent "themes" et peut contenir entre 1 et n groupes ainsi que 1 et *n* couches,
+* un **thème** est intégré au parent "themes" et peut contenir entre 0 et n groupes ainsi que 1 et *n* couches,
 * le parent "**themes**" peut contenir entre 1 et *n* thème,
 
 Ceci peut être résumé avec l'arborescence suivante :
@@ -53,37 +53,37 @@ Par défaut, le contenu suivant est proposé :
 		</theme>
 	    	<theme name="Environnement"  collapsed="false" id="environnement" icon="leaf">
 			<layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="false" tiled="false" searchable="false" queryable="true" fields="axe" aliases="axe" infoformat="application/vnd.ogc.gml" featurecount="20" sld="http://kartenn.region-bretagne.fr/styles/reserve_naturelle.sld" url="http://ows.region-bretagne.fr:80/geoserver/rb/wms" legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/reserve_naturelle.svg" attribution="Source: Région Bretagne" metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51" >
-			<template url="templates/global.reserve_naturelle_reg.mst"></template>
+			<template url="demo/templates/global.reserve_naturelle_reg.mst"></template>
 			</layer>
 		</theme>
 		<theme name="Éducation"  collapsed="false" id="education" icon="graduation-cap">
 			<layer id="lycee" name="Lycées"  visible="false" tiled="false" searchable="false" queryable="true" fields="axe" aliases="axe" attributefilter="true" attributefield="secteur_li" attributevalues="Public,Privé sous contrat avec l'éducation nationale"  attributelabel="Filtre" attributestylesync="false" attributefilterenabled="false" infoformat="application/vnd.ogc.gml" featurecount="20" sld="http://kartenn.region-bretagne.fr/styles/lycee_secteur.sld" url="http://ows.region-bretagne.fr/geoserver/rb/wms" attribution="Source: Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" >
-			<template url="templates/global.lycee.mst"></template>
+			<template url="demo/templates/global.lycee.mst"></template>
 			</layer>
 		</theme>
 		<theme name="Transports"  collapsed="false" id="transport" icon="bus">
 			<group name="Transport ferroviaire" id="grp1" >
 				<layer id="troncon_ferroviaire" name="Lignes ferroviaires"  visible="false" tiled="false" searchable="false" queryable="true" fields="axe" aliases="axe" infoformat="application/vnd.ogc.gml" featurecount="20" style="ligne_ferroviaire_defaut" stylesalias="Par défaut" url="http://ows.region-bretagne.fr/geoserver/rb/wms" attribution="Source: Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=0da27e88-4da6-423e-ba4c-dbcad9128cd2" metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0da27e88-4da6-423e-ba4c-dbcad9128cd2">
-				<template url="templates/transport.ligne_ferroviaire.mst"></template>
+				<template url="demo/templates/transport.ligne_ferroviaire.mst"></template>
 				</layer>
 				<layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="false" tiled="false" searchable="true" queryable="true" fields="" aliases="" infoformat="application/vnd.ogc.gml" featurecount="20" style="arret_ferroviaire_defaut, arret_ferroviaire_nature" stylesalias="Par défaut,Nature des arrêts ferroviaires" legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/gare_ter.svg" url="http://ows.region-bretagne.fr/geoserver/rb/wms" attribution="Source: Région Bretagne" metadata="http://kartenn.region-bretagne.fr/ geonetwork/?uuid=4a9d13f7-17be-4a98-9f8f-907cf223072f" metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4a9d13f7-17be-4a98-9f8f-907cf223072f" >
-				<template url="templates/global.arret_ferroviaire.mst"></template>
+				<template url="demo/templates/global.arret_ferroviaire.mst"></template>
 				</layer>
 			</group>
 			<group name="Transport maritime" id="grp2" >
 				<layer id="gare_maritime" name="Gares maritimes"  visible="false" tiled="false" searchable="false" queryable="true" fields="axe" aliases="axe" infoformat="application/vnd.ogc.gml" featurecount="20" sld="http://kartenn.region-bretagne.fr/styles/gare_maritime.sld"
 	             		url="https://geobretagne.fr/geoserver/dreal_b/ows" legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/gare_maritime.svg" attribution="Source: DREAL Bretagne"
 	             		metadata="https://geobretagne.fr/geonetwork/apps/ georchestra/?uuid=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42" >
-				<template url="templates/global.gare_maritime.mst"></template>
+				<template url="demo/templates/global.gare_maritime.mst"></template>
 				</layer>
 				<layer id="port" name="Ports"  visible="false" tiled="false" searchable="false" queryable="true" fields="axe" aliases="axe" infoformat="application/vnd.ogc.gml" featurecount="20" sld="http://kartenn.region-bretagne.fr/styles/port.sld" url="http://ows.region-bretagne.fr:80/geoserver/rb/wms" legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/port.svg" attribution="Source: Région Bretagne" metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b" >
-				<template url="templates/global.port.mst"></template>
+				<template url="demo/templates/global.port.mst"></template>
 				</layer>
 			</group>
 		</theme>
 		<theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="globe">
-			<layer id="commune" name="Commune" visible="false" queryable="false" fields="nom_geo" aliases="Nom" type="customlayer" style="" opacity="1" legendurl="img/legend/commune.png" url="customlayers/commune.js" tooltip="true" attribution="Source: GéoBretagne" metadata="https://geobretagne.fr/geonetwork/apps/ georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5"/>
-			<layer id="epci" name="Intercommunalité" visible="true" queryable="false" fields="nom_geo" aliases="Nom" customcontrol="true" type="customlayer" style="" opacity="1" legendurl="img/legend/epci.png" url="customlayers/epci.js" tooltip="true" tooltipenabled="true" attribution="Source: GéoBretagne" metadata="https://geobretagne.fr/geonetwork/apps/ georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff"/>
+			<layer id="commune" name="Commune" visible="false" queryable="false" fields="nom_geo" aliases="Nom" type="customlayer" style="" opacity="1" legendurl="img/legend/commune.png" url="demo/customlayers/commune.js" tooltip="true" attribution="Source: GéoBretagne" metadata="https://geobretagne.fr/geonetwork/apps/ georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5"/>
+			<layer id="epci" name="Intercommunalité" visible="true" queryable="false" fields="nom_geo" aliases="Nom" customcontrol="true" type="customlayer" style="" opacity="1" legendurl="img/legend/epci.png" url="demo/customlayers/epci.js" tooltip="true" tooltipenabled="true" attribution="Source: GéoBretagne" metadata="https://geobretagne.fr/geonetwork/apps/ georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff"/>
 		</theme>
 	</themes>
 
@@ -138,8 +138,8 @@ Configuration de la liste des thèmes
 
 **Paramètres**
 
-* ``mini``: paramètre optionnel de type booléen (true/false) qui précise si le panneau de gauche est réduit à l'ouverture de l'application. L'attribut ``collapsed`` des ``<theme>`` doit être à true pour que cet attribut soit pris en compte. Défaut = false.
-* ``legendmini``: paramètre optionnel de type booléen (true/false)  qui précise si le panneau de la légende est réduit à l'ouverture de l'application. Défaut = false.
+* ``mini``: paramètre optionnel de type booléen (true/false) qui précise si le panneau de gauche est réduit à l'ouverture de l'application. L'attribut ``collapsed`` des ``<theme>`` doit être à true pour que cet attribut soit pris en compte. Valeur par défaut **false**.
+* ``legendmini``: paramètre optionnel de type booléen (true/false)  qui précise si le panneau de la légende est réduit à l'ouverture de l'application. Valeur par défaut **false**.
 
 
 **Syntaxe** ``<theme>``
@@ -176,7 +176,7 @@ Voici un exemple d'icône personnalisée :
         background-size: 16px 16px;
         margin-top: 9px;
 	}
-* ``url`` :guilabel:`studio` : Des thèmes externes (présents dans d'autres configurations peuvent être automatiquement chargés par référence au fichier xml utilisé (url=) et à l'id de la thématique (id=). Attention si la configuration externe est sur un autre domaine, il faut alors que mviewer utilise un proxy Ajax ou alors s'assurer que CORS est activé sur le serveur distant. Les thématiques externes peuvent utiliser des ressources particulières (templates, customLayer, sld...) si les URLs de ces ressources sont absolues et accessibles.
+* ``url`` :guilabel:`studio` : Des thèmes externes (présents dans d'autres configurations) peuvent être automatiquement chargés par référence au fichier xml utilisé (url=) et à l'id de la thématique (id=). Attention si la configuration externe est sur un autre domaine, il faut alors que mviewer utilise un proxy Ajax ou alors s'assurer que CORS est activé sur le serveur distant. Les thématiques externes peuvent utiliser des ressources particulières (templates, customLayer, sld...) si les URLs de ces ressources sont absolues et accessibles.
 
 
 **Syntaxe** ``<group>``

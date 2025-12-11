@@ -18,7 +18,7 @@ Ci-dessous vous trouverez une documentation pour les utilisateurs ou administrat
 mviewer
 ~~~~~~~
 
-mviewer est un Visualiseur géographique basé sur OpenLayers 6.3.1 et Bootstrap 3.3.6.
+mviewer est un Visualiseur géographique basé sur OpenLayers 6.3.1 et Bootstrap 5.3.3.
 
 L'ensemble des sources de ce projet peut être trouvé sur le dépôt GitHub_ .
 
@@ -81,7 +81,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_tech/config_environmentvar.rst
    doc_tech/config_urlparams.rst
 
-Documentation dévelopeur
+Documentation développeur
 -------------------------------------------------
 
 Cette partie est dédiée aux personnes qui souhaite développer des fonctionnalités pour mviewer.
@@ -89,7 +89,7 @@ Cette partie est dédiée aux personnes qui souhaite développer des fonctionnal
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Documentation dévelopeur
+   :caption: Documentation développeur
 
    doc_dev/dev_intro.rst
    doc_dev/custom.rst
@@ -101,7 +101,7 @@ Cette partie est dédiée aux personnes qui souhaite développer des fonctionnal
    doc_dev/customcontrol_dev.rst
    doc_dev/customlayer_template.rst
 
-Documentation contribution
+Documentation contributeur
 -------------------------------------------------
 
 Cette partie est dédiée aux personnes qui ont vocation à contribuer au code mviewer.
@@ -117,13 +117,25 @@ Cette partie est dédiée aux personnes qui ont vocation à contribuer au code m
    doc_contrib/git
    doc_contrib/release
 
+Guides de migration
+-------------------------------------------------
+
+Cette section propose les informations nécessaires pour migrer votre installation mviewer vers une version plus récente. Vous y trouverez les étapes indispensables, les points d’attention et les évolutions techniques à prendre en compte lors de la mise à jour.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Guides de migration
+
+   doc_migration/v4.0.rst
+
 Auteurs et licence
 ==================
 
 Cette documentation a été réalisée par :
 
-* l'équipe "mviewer" *(Région Bretagne)*
-* `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
+* Maintenue par la communauté "mviewer" *(PSC et contributeurs)*
+* Initialisée par `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
 
 Sauf indication contraire, cette documentation est sous licence **Creative Commons Attribution - Non Commercial - ShareAlike 4.0** (CC-BY-NC-SA_) .
 
